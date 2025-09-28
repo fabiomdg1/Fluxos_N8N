@@ -1,0 +1,173 @@
+{
+  "name": "Intervalo entre mensagens enviadas",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const mensagens = [\n  \"Oi, tudo bem? 👋\",\n  \"Eu sou a Cida, da Ótica Cidade Express 🤓✨\",\n  \"Qual o seu nome?\",\n  \"Você já é nosso cliente ou está chegando pela primeira vez?\",\n  \"Quer orçamento, agendamento ou tem alguma dúvida específica?\"\n];\n\n// Transforma cada mensagem em um item separado\nreturn mensagens.map(m => ({ json: { texto: m } }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        224
+      ],
+      "id": "58c27560-57c8-41fb-a013-04b1fc309b10",
+      "name": "Code8"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        416,
+        224
+      ],
+      "id": "7e390676-4c5f-45e9-9f77-031fb9fbbea8",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me2",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        304
+      ],
+      "id": "284fa095-5f46-4301-a924-e09c89cfc1bc"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (5 - 2 + 1)) + 2 }}\n"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        304
+      ],
+      "id": "00222bdf-e2ed-47d3-b19e-11d7a3f6e7ef",
+      "name": "Wait8",
+      "webhookId": "47307502-75b9-457b-a6ec-451368ed8e72"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "=Atendimento",
+        "remoteJid": "=5511980517425",
+        "messageText": "={{ $json.texto }}",
+        "options_message": {
+          "delay": 1200
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        896,
+        304
+      ],
+      "id": "f46e846b-9023-45c2-b751-b20c3a9c15c1",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "9rHo1SLmVipDFsCu",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        16,
+        224
+      ],
+      "id": "f286e610-7d90-4d8d-b6c6-f8949193750d",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Code8": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto1": {
+      "main": [
+        [
+          {
+            "node": "Replace Me2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7b2b7fca-41f1-4431-a58c-53cec17089f8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "395feb2317bce9729cb738cb5fc906905e63b5545d3029983801bd9fd31b3487"
+  },
+  "id": "iHGOCjvJD6lRfpHb",
+  "tags": []
+}
