@@ -1,0 +1,164 @@
+{
+  "name": "Agendamento de Evento no Google Calendar",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -336,
+        -96
+      ],
+      "id": "b92ab3a7-c841-4051-bbb3-666b91d31db5",
+      "name": "When chat message received",
+      "webhookId": "c19f0f2b-1d0d-430e-80c6-9c173c03bb19"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Você é um assistente pessoal especializado em agendamentos no Google Calendar.\n\nHoje é: {{ $now }}\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -128,
+        -96
+      ],
+      "id": "f49467b2-fb87-42e6-8618-4b0ed0b07a30",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -128,
+        144
+      ],
+      "id": "09b78425-e230-41e3-b096-4f528699ea60",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "nyNqNdazWnyaGAkR",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        144
+      ],
+      "id": "be9e4ad3-a703-4c26-9f0b-44421101f7e3",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "xlpnhVhSkV0vllzH",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "6a424b2f2ac3a26c89905c8ebb41e5c54b3e5febaf8ac5ecaef8d42d966860dd@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Cabelereiro"
+        },
+        "start": "={{ $fromAI('data_hora_Inicio','Data e hora do inicio do agendamento. Exemplo: yyyy-MM-dd HH:mm:ss') }}",
+        "end": "={{ $fromAI('data_hora_Fim','Data e hora do fim do agendamento. Exemplo: yyyy-MM-dd HH:mm:ss') }}",
+        "additionalFields": {
+          "description": "={{ $fromAI('Nome', 'nome da pessoa') }}",
+          "summary": "={{ $fromAI('Servico', 'servico escolhido') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        144
+      ],
+      "id": "d2c2cd59-c681-48f8-adce-843a3de65253",
+      "name": "Create an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "kTnN8W9fQtoFFOYM",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3f477b28-f980-4b1a-bbda-b29c62802f0b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "395feb2317bce9729cb738cb5fc906905e63b5545d3029983801bd9fd31b3487"
+  },
+  "id": "ZiQWgbhuIWw06sAV",
+  "tags": []
+}
