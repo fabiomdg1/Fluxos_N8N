@@ -1,0 +1,296 @@
+{
+  "name": "Salva Datas de Aniversario",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c522a803-74a5-402e-9fd3-5cda5faf0615",
+              "name": "Nome Completo",
+              "value": "={{ $json['Nome Completo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "05ca69c9-0e04-46d7-b5a7-10553a8d0871",
+              "name": "Data de Nascimento",
+              "value": "={{ new Date($json[\"Data do seu aniversário\"]).toLocaleDateString(\"pt-BR\") }}",
+              "type": "string"
+            },
+            {
+              "id": "10c9d234-0633-4449-ae61-f07cb2af02b2",
+              "name": "Telefone",
+              "value": "={{ \"55\" + $json.Telefone.replace(/\\D/g, \"\") }}",
+              "type": "string"
+            },
+            {
+              "id": "4996280b-9fae-49f2-bbaa-601deb7e48d3",
+              "name": "submittedAt",
+              "value": "={{ new Date($json[\"submittedAt\"]).toLocaleDateString(\"pt-BR\") }}",
+              "type": "string"
+            },
+            {
+              "id": "653fd177-9076-4f19-a8f0-a3411714dd23",
+              "name": "formMode",
+              "value": "={{ $json.formMode }}",
+              "type": "string"
+            },
+            {
+              "id": "63ed3820-8d85-40df-b682-5e82747ad4b8",
+              "name": "aniversario",
+              "value": "={{ $json[\"Data do seu aniversário\"].split(\"-\").reverse().slice(0,2).join(\"/\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        0
+      ],
+      "id": "ff5c08f9-a09c-4446-8b6f-e1fb0f81305f",
+      "name": "Normalizacao"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        480,
+        0
+      ],
+      "id": "371240b2-ea03-415d-b6cb-31d9fdebd6c8",
+      "name": "Fim"
+    },
+    {
+      "parameters": {
+        "formTitle": "Importante!",
+        "formDescription": "=<p style=\"font-size:20px; font-weight:bold; color:#111; margin-bottom:8px;\">\n  🎂 Me fala sua data de aniversário\n</p>\n<p style=\"font-size:16px; color:#555;\">\n  Não quero depender da memória 😅\n</p>\n",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome Completo",
+              "placeholder": "Informe seu nome completo",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Data de Nascimento",
+              "fieldType": "date"
+            },
+            {
+              "fieldLabel": "Telefone",
+              "fieldType": "number",
+              "placeholder": "Informe seu telefone com DDD",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Enviar",
+          "path": "aniversariantes",
+          "respondWithOptions": {
+            "values": {
+              "respondWith": "redirect",
+              "redirectUrl": "https://contapramim.vercel.app/obrigado.html"
+            }
+          },
+          "customCss": "=:root {\n  /* ===== Tipografia ===== */\n  --font-family: 'Inter', 'Open Sans', sans-serif;\n  --font-weight-normal: 400;\n  --font-weight-bold: 600;\n\n  --font-size-body: 14px;\n  --font-size-label: 13px;\n  --font-size-header: 22px;\n  --font-size-paragraph: 14px;\n  --font-size-link: 13px;\n  --font-size-error: 12px;\n\n  --font-size-h1: 28px;\n  --font-size-h2: 22px;\n  --font-size-h3: 18px;\n  --font-size-h4: 16px;\n  --font-size-h5: 14px;\n  --font-size-h6: 12px;\n\n  /* ===== Cores ===== */\n  --color-background: #f9fafb;\n  --color-card-bg: #ffffff;\n  --color-card-border: #e5e7eb;\n  --color-card-shadow: rgba(0, 0, 0, 0.05);\n\n  --color-header: #111827;\n  --color-subheader: #6b7280;\n  --color-label: #374151;\n  --color-input-border: #d1d5db;\n  --color-input-text: #111827;\n  --color-focus-border: #2563eb;\n\n  --color-submit-btn-bg: #2563eb;\n  --color-submit-btn-bg-hover: #1d4ed8;\n  --color-submit-btn-text: #ffffff;\n\n  --color-error: #dc2626;\n  --color-required: #ef4444;\n  --color-link: #2563eb;\n\n  /* ===== Bordas e sombras ===== */\n  --border-radius-card: 10px;\n  --border-radius-input: 8px;\n  --border-radius-btn: 8px;\n\n  --box-shadow-card: 0px 4px 12px rgba(0, 0, 0, 0.06);\n\n  /* ===== Espaçamento ===== */\n  --padding-container: 24px;\n  --padding-input: 12px 14px;\n  --margin-section: 20px;\n\n  /* ===== Dimensões ===== */\n  --container-width: 420px;\n  --submit-btn-height: 48px;\n  --checkbox-size: 18px;\n\n  /* ===== Outros ===== */\n  --opacity-placeholder: 0.6;\n}"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "cf7cc2bb-b05e-4537-a669-55df0cd6f03d",
+      "name": "Formulário",
+      "webhookId": "9df352ba-8857-46dc-810b-29497416b318"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54",
+          "mode": "list",
+          "cachedResultName": "Aniversariantes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "={{ $json['Nome Completo'] }}",
+            "Telefone": "={{ $json.Telefone }}",
+            "formMode": "={{ $json.formMode }}",
+            "Data de Cadastro": "={{ $json.submittedAt }}",
+            "Data de Nasc.": "={{ $json['Data de Nascimento'] }}",
+            "Aniversário": "={{ $json.aniversario }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data de Nasc.",
+              "displayName": "Data de Nasc.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Aniversário",
+              "displayName": "Aniversário",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Cadastro",
+              "displayName": "Data de Cadastro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "formMode",
+              "displayName": "formMode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        0
+      ],
+      "id": "7247ec0f-c22e-4a6a-8a03-7d0cc9f3d270",
+      "name": "Salva Dados na Base",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "iot58kMEjv6Evt4Y",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Formulário": [
+      {
+        "json": {
+          "Nome Completo": "asdf",
+          "Data do seu aniversário": "2021-01-01",
+          "Telefone": "980517425",
+          "submittedAt": "2025-09-27T17:59:06.828-03:00",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Normalizacao": {
+      "main": [
+        [
+          {
+            "node": "Salva Dados na Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formulário": {
+      "main": [
+        [
+          {
+            "node": "Normalizacao",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Salva Dados na Base": {
+      "main": [
+        [
+          {
+            "node": "Fim",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fe77ca3b-209c-419a-bd90-17369fd820cb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "395feb2317bce9729cb738cb5fc906905e63b5545d3029983801bd9fd31b3487"
+  },
+  "id": "Db4ly2qBlBHjOC8X",
+  "tags": []
+}

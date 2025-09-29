@@ -1,0 +1,475 @@
+{
+  "name": "4",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "114dbcc9-e6a0-497b-8478-6e3f8d06bd69",
+      "name": "Para cada aniversariante",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1440,
+        48
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "8b7ea052-702c-43fe-bcf8-f825bf7be839",
+      "name": "Aguarda 5 segundos",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        80
+      ],
+      "webhookId": "c0e7213e-06bc-47df-90a7-3ecb33a4861a"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54",
+          "mode": "list",
+          "cachedResultName": "Aniversariantes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Enviado",
+            "Aniversário": "={{ $('Contatos').item.json['Aniversário'] }}"
+          },
+          "matchingColumns": [
+            "Aniversário"
+          ],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Nasc.",
+              "displayName": "Data de Nasc.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Aniversário",
+              "displayName": "Aniversário",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data de Cadastro",
+              "displayName": "Data de Cadastro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "formMode",
+              "displayName": "formMode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "success",
+              "displayName": "success",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "id": "7b8626b1-1b5d-46bd-8b97-d34de3ce2f39",
+      "name": "Atualiza status na planilha",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        -544,
+        -144
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "iot58kMEjv6Evt4Y",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "4b6d55c4-ef3e-4c0a-8b1d-2865ce757784",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": {},
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1dc10e80-54d3-4cf1-8ff3-70788306418e",
+      "name": "Enviado com sucesso?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -848,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54",
+          "mode": "list",
+          "cachedResultName": "Aniversariantes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N3FHeww8DEYrsctphxkSWUi6grLShu2AgqQ_NoBMu54/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "formMode",
+              "lookupValue": "=test"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2288,
+        64
+      ],
+      "id": "8d14925a-3535-45e5-9004-3494ce1705ee",
+      "name": "Contatos",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "iot58kMEjv6Evt4Y",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "88d69d26-2457-4744-8349-a7c887b7e94e",
+              "leftValue": "={{ $json['Aniversário'] }}",
+              "rightValue": "={{ new Date().toLocaleDateString(\"pt-BR\", { day: \"2-digit\", month: \"2-digit\" }) }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1984,
+        64
+      ],
+      "id": "170c43f9-48c3-488b-95c6-84034634ff09",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1728,
+        176
+      ],
+      "id": "728dde9e-18d9-4664-bd4c-bbf607a570b6",
+      "name": "Fim"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 16
+            }
+          ]
+        }
+      },
+      "id": "fc4cda89-6449-4f02-a515-f0542549ec3d",
+      "name": "Verificacao Diaria",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2576,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Aniversariantes hoje?\nVerifica se há aniversáriantes na data atual",
+        "height": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2048,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "714304f6-7c00-4db0-a758-3a20ceb4c8d6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "\"Nome da sua instancia\"",
+        "remoteJid": "\"Telefone do destinatário\"",
+        "messageText": "=Hoje é aniversário do {{ $json.Nome }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        64
+      ],
+      "id": "a9e3b245-ad32-45c7-8cf0-043ca52671f5",
+      "name": "Envio de Lembrete",
+      "credentials": {
+        "evolutionApi": {
+          "id": "9rHo1SLmVipDFsCu",
+          "name": "Evolution account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Para cada aniversariante": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Envio de Lembrete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aguarda 5 segundos": {
+      "main": [
+        [
+          {
+            "node": "Para cada aniversariante",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza status na planilha": {
+      "main": [
+        [
+          {
+            "node": "Aguarda 5 segundos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviado com sucesso?": {
+      "main": [
+        [
+          {
+            "node": "Atualiza status na planilha",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aguarda 5 segundos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contatos": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Para cada aniversariante",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fim",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificacao Diaria": {
+      "main": [
+        [
+          {
+            "node": "Contatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envio de Lembrete": {
+      "main": [
+        [
+          {
+            "node": "Enviado com sucesso?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "42a7a4f5-27e8-4326-b98e-578287102f2a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "395feb2317bce9729cb738cb5fc906905e63b5545d3029983801bd9fd31b3487"
+  },
+  "id": "ZiQWgbhuIWw06sAV",
+  "tags": []
+}
